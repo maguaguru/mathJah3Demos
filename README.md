@@ -1,1 +1,1 @@
-# mathJah3Demos
+# mathjah3demos
