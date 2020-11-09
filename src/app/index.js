@@ -1,14 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import store, { history } from './storage'
 import { ConnectedRouter } from 'connected-react-router'
-import './index.css'
 import App from './App'
 
 ReactDOM.render(
-    <React.StrictMode>
-        <ConnectedRouter>
+    <Provider store={store}>
+        <ConnectedRouter history={history}>
             <App />
         </ConnectedRouter>
-    </React.StrictMode>,
+    </Provider>,
     document.getElementById('root')
 )
