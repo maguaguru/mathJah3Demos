@@ -29,6 +29,10 @@
             <link href="<%= htmlWebpackPlugin.files.css[key] %>" rel="stylesheet">
         <% } %>
     <% } %>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script src="mathjax-config.js" defer></script>
+    <script src="node_modules/mathjax/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <script src="node_modules/mathjax/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
 </head>
 <body style="padding:0; margin:0">
 <noscript>

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
     "build": "cross-env NODE_ENV=production webpack",
-    "buildDev": "cross-env NODE_ENV=development webpack"
+    "buildDev": "cross-env NODE_ENV=development webpack",
+    "test": "jest --coverage"
   },
   "files": [
     "dist"
@@ -76,6 +77,7 @@
     "jest-junit": "^10.0.0",
     "jest-watch-typeahead": "^0.4.2",
     "lint-staged": "^10.0.8",
+    "mathjax": "^3.1.2",
     "notistack": "^0.9.17",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
@@ -97,5 +99,78 @@
     "webpack-dev-middleware": "^3.7.2",
     "webpack-dev-server": "^3.11.0",
     "webpack-hot-middleware": "^2.25.0"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 97,
+        "functions": 97,
+        "lines": 97,
+        "statements": 97
+      },
+      "./src/app/**/*.{js,jsx}": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    },
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!src/app/App.jsx",
+      "!src/**/index.js",
+      "!src/testSetup.js"
+    ],
+    "coverageDirectory": "./coverage",
+    "coverageReporters": [
+      "lcov",
+      "cobertura"
+    ],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+    },
+    "setupFiles": [
+      "<rootDir>/src/testSetup.js"
+    ],
+    "setupFilesAfterEnv": [],
+    "testMatch": [
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx}"
+    ],
+    "testEnvironment": "jest-environment-jsdom-sixteen",
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "modulePaths": [],
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "web.ts",
+      "ts",
+      "web.tsx",
+      "tsx",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ],
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ],
+    "reporters": [
+      "default",
+      "jest-junit"
+    ]
+  },
+  "jest-junit": {
+    "suiteName": "jest tests",
+    "outputDirectory": "./coverage/junit",
+    "outputName": "junit.xml",
+    "classNameTemplate": "{classname}-{title}",
+    "titleTemplate": "{classname}-{title}",
+    "ancestorSeparator": " › ",
+    "usePathForSuiteName": "true"
   }
 }
