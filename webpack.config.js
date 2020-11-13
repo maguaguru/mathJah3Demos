@@ -40,7 +40,7 @@ const config = {
         app: ['./src/app/index.js']
     },
     devServer: {
-        openPage: '',
+        openPage: '?launchId=dev00001',
         historyApiFallback: true,
         port: 9000,
         before: function(app) {
