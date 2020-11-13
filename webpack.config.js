@@ -80,6 +80,15 @@ module.exports = () => {
                         rel: 'stylesheet'
                     }
                 ]
+            }),
+            new HtmlWebpackPlugin({
+                template: 'public/mathJax.ejs',
+                title: 'MathJax Preview',
+                filename: 'mathJax.html',
+                inject: false,
+                minify: {
+                    collapseWhitespace: true
+                }
             })
         ]
     }
