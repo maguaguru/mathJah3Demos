@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Box, Button, TextareaAutosize, Typography } from '@material-ui/core'
+import StudentProgress from './StudentProgress'
 
 class TexChtmlExample extends PureComponent {
 
@@ -19,7 +20,9 @@ class TexChtmlExample extends PureComponent {
                     MathMl content view
                 </Typography>
                 <Box>
-                    <iframe src="http:/localhost:9000/mathJax.html" />
+                    <StudentProgress
+                        pointsRange={[{ points: 5, range: 50 }, { points: 10, range: 80 }]}
+                    />
                 </Box>
             </Box>
         )

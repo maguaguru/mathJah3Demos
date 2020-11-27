@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { mount } from 'enzyme'
-import { Box, TextareaAutosize, Typography } from '@material-ui/core'
+import { TextareaAutosize } from '@material-ui/core'
 import TexChtmlExample from './TexChtmlExample'
 
 describe('TexChtmlExample component', () => {
