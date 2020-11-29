@@ -51,4 +51,26 @@ describe('StudentProgress component', () => {
             expect(studentProgress.find('p[data-testid="studentHighestProgressLabel"]').text()).toEqual('Highest Progress:')
         })
     })
+
+    describe('Render with current and highest progress', () => {
+        beforeEach(() => {
+            studentProgressProps = {
+                pointsRange: [
+                    { points: 5, range: 50 },
+                    { points: 10, range: 100 }
+                ],
+                currentProgress: 45,
+                highestProgres: 60
+            }
+            studentProgress = mount(<StudentProgress {...studentProgressProps} />)
+        })
+
+        it('should have current progress bar', () => {
+            expect(studentProgress.find('rect[data-testid="studentCurrentProgressBar"]').exists()).toBeTruthy()
+        })
+
+        it('should have highest progress bar', () => {
+            expect(studentProgress.find('rect[data-testid="studentHighestProgressBar"]').exists()).toBeTruthy()
+        })
+    })
 })

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Box, Typography, makeStyles } from '@material-ui/core'
 
 const DEFAULT_WIDTH = 656
-const DEFAULT_HEIGHT = 30
+const DEFAULT_HEIGHT = 24
 
 const useStyles = makeStyles(theme => ({
     studentCurrentProgressIndicator: {
@@ -20,16 +20,33 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const StudentProgress = ({ width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT, pointsRange }, ...props) => {
+const StudentProgress = ({
+    width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT, pointsRange, currentProgress, highestProgres
+}) => {
     const classes = useStyles()
+    const patch = `M0.5 4C0.5 2.067 2.067 0.5 4 0.5H652C653.933 0.5 ${width} 2.067 ${width} 4V23.5H4C2.067 ${height} 0.5 21.933 0.5 20V4Z`
 
     return (
         <Box>
             <Typography variant="body1" data-testid="studentProgressLabel">Progress</Typography>
             <Box display="flex" flexDirection="row" data-testid="studentProgressBar">
-                <svg width={width} height={height} viewBox="0 0 656 30" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                    <path d="M0.5 4C0.5 2.067 2.067 0.5 4 0.5H652C653.933 0.5 655.5 2.067 655.5 4V23.5H4C2.067 23.5 0.5 21.933 0.5 20V4Z" stroke="#727272" />
-                    {pointsRange.map((pointRange, index) =>
+                <svg width="100%" height={height} viewBox="0 -4 656 30" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                    <path d={patch} stroke="#727272" />
+                    {
+                        currentProgress && currentProgress > 0 &&
+                        <rect
+                            data-testid="studentCurrentProgressBar"
+                            x="0" y="0" width={width / 100 * currentProgress} height={height}
+                            fill="#54689F" rx={4}
+                        />
+                    }
+                    {highestProgres && highestProgres > 0 &&
+                    <rect
+                        data-testid="studentHighestProgressBar"
+                        x={width / 100 * highestProgres - 2} y="0" width="4" height={height + 4}
+                        fill="#131F45" stroke="white" rx={3} transform="translate(0 -2)"
+                    />}
+                    {pointsRange.map(pointRange =>
                         (
                             <g key={pointRange.points}>
                                 <line x1={width / 100 * pointRange.range} y1="0" x2={width / 100 * pointRange.range} y2={height} stroke="gray" />
