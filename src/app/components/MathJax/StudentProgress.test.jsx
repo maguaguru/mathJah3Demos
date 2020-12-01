@@ -24,7 +24,7 @@ describe('StudentProgress component', () => {
         })
 
         it('should have student progress label', () => {
-            expect(studentProgress.find('p[data-testid="studentProgressLabel"]').text()).toEqual('Progress')
+            expect(studentProgress.find('span[data-testid="studentProgressLabel"]').text()).toEqual('Progress')
         })
 
         it('should have progress bar element', () => {
@@ -32,23 +32,23 @@ describe('StudentProgress component', () => {
         })
 
         it('should have current points label', () => {
-            expect(studentProgress.find('p[data-testid="studentPointsLabel"]').text()).toEqual('Points')
+            expect(studentProgress.find('span[data-testid="studentPointsLabel"]').text()).toEqual('Points')
         })
 
         it('should have current progress indicator', () => {
             expect(studentProgress.find('div[data-testid="studentCurrentProgressIndicator"]').exists()).toBeTruthy()
         })
 
-        it('should have current progress label', () => {
-            expect(studentProgress.find('p[data-testid="studentCurrentProgressLabel"]').text()).toEqual('Current Progress:')
+        it('should have correct current progress label', () => {
+            expect(studentProgress.find('p[data-testid="studentCurrentProgressLabel"]').text()).toEqual('Current Progress: -')
         })
 
         it('should have highest progress indicator', () => {
             expect(studentProgress.find('div[data-testid="studentHighestProgressIndicator"]').exists()).toBeTruthy()
         })
 
-        it('should have highest progress label', () => {
-            expect(studentProgress.find('p[data-testid="studentHighestProgressLabel"]').text()).toEqual('Highest Progress:')
+        it('should have correct highest progress label', () => {
+            expect(studentProgress.find('p[data-testid="studentHighestProgressLabel"]').text()).toEqual('Highest Progress: -')
         })
     })
 
@@ -71,6 +71,14 @@ describe('StudentProgress component', () => {
 
         it('should have highest progress bar', () => {
             expect(studentProgress.find('rect[data-testid="studentHighestProgressBar"]').exists()).toBeTruthy()
+        })
+
+        it('should have correct current progress label', () => {
+            expect(studentProgress.find('p[data-testid="studentCurrentProgressLabel"]').text()).toEqual('Current Progress: 45%')
+        })
+
+        it('should have correct highest progress label', () => {
+            expect(studentProgress.find('p[data-testid="studentHighestProgressLabel"]').text()).toEqual('Highest Progress: 60%')
         })
     })
 })

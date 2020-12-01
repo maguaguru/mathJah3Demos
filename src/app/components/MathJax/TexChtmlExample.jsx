@@ -21,9 +21,9 @@ class TexChtmlExample extends PureComponent {
                 </Typography>
                 <Box>
                     <StudentProgress
-                        pointsRange={[{ points: 5, range: 50 }, { points: 10, range: 80 }]}
-                        currentProgress={45}
-                        highestProgres={85}
+                        pointsRange={[{ points: 10, range: 50 }, { points: 5, range: 100 }]}
+                        currentProgress={50}
+                        highestProgres={60}
                     />
                 </Box>
             </Box>
