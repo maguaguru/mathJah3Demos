@@ -4,20 +4,10 @@ import { Box, Typography, makeStyles } from '@material-ui/core'
 
 const WIDTH = 656
 const HEIGHT = 24
+const LABEL_CONTAINER_WIDTH = 40
 const POINTS_LABEL_WIDTH = 31
 
 const useStyles = makeStyles(theme => ({
-    studentProgressBar: {
-        width: '100%',
-        height: `${HEIGHT}px`,
-        border: 'solid 1px #727272', // theme.palette[grey400]
-        borderRadius: '5px 5px 0 5px'
-    },
-    pointsDivider: {
-        width: '1px',
-        height: `${HEIGHT}px`,
-        borderRight: 'solid 1px #727272'
-    },
     studentCurrentProgressIndicator: {
         width: `${HEIGHT}px`,
         height: `${HEIGHT}px`,
@@ -26,53 +16,27 @@ const useStyles = makeStyles(theme => ({
     },
     studentHighestProgressIndicator: {
         position: 'relative',
-        width: '4px',
-        height: '27px',
-        right: '2px',
-        borderRadius: '4px',
+        width: '5px',
+        height: '26px',
+        borderRadius: '5px',
         backgroundColor: '#131F45', // theme.palette[indigo900]
         border: 'solid 1px white'
-    },
-    studentCurrentProgressBar: {
-        position: 'relative',
-        width: '200px',
-        height: `${HEIGHT}px`,
-        backgroundColor: '#54689F', // theme.palette[indigo400]
-        borderRadius: '4px 0 0 4px'
     }
-
 }))
 
 const StudentProgress = ({ width = WIDTH, pointsRange, currentProgress, highestProgres }) => {
     const classes = useStyles()
-    const patchOrigin = 'M0.5 4C0.5 2.067 2.067 0.5 4 0.5H924C925.933 0.5 927.5 2.06701 927.5 4V23.5H4.00002C2.06702 23.5 0.5 21.933 0.5 20V4Z'
     const patch = `M0.5 4C0.5 2.067 2.067 0.5 4 0.5H652C653.933 0.5 ${width} 2.067 ${width} 4V23.5H4C2.067 ${HEIGHT} 0.5 21.933 0.5 20V4Z`
     const viewBox = `0 -2 ${width + 1} 30`
+
+    let labelShift = POINTS_LABEL_WIDTH
 
     return (
         <Box>
             <Typography variant="caption" data-testid="studentProgressLabel">Progress</Typography>
             <Box display="flex" flexDirection="row" data-testid="studentProgressBar">
-                {/*   <Box display="flex" flexDirection="row" className={classes.studentProgressBar}>
-                    {
-                        currentProgress && currentProgress > 0 &&
-                        <Box data-testid="studentCurrentProgressBar" className={classes.studentCurrentProgressBar} />
-                    }
-                    {pointsRange.map((pointRange, index) =>
-                        (
-                            <Box key={`pointsDivider${pointRange.points}`} style={{ position: 'relative', left: `${pointRange.range}%` }}>
-                                <Box className={classes.pointsDivider} />
-                            </Box>
-                        )
-                    )}
-                    {highestProgres && highestProgres > 0 &&
-                    <Box data-testid="studentHighestProgressBar" className={classes.studentHighestProgressIndicator} style={{ left: `${highestProgres}%` }} />}
-                </Box>*/}
 
-               {/* {highestProgres && highestProgres > 0 &&
-                <Box data-testid="studentHighestProgressBar" className={classes.studentHighestProgressIndicator} style={{ left: `${highestProgres}%` }} />}*/}
-
-                <svg width={width} height={30} viewBox={viewBox} fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <svg width="100%" height="30" viewBox={viewBox} fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
                     <path d={patch} stroke="#727272" />
                     {
                         currentProgress && currentProgress > 0 &&
@@ -85,27 +49,33 @@ const StudentProgress = ({ width = WIDTH, pointsRange, currentProgress, highestP
                     {highestProgres && highestProgres > 0 &&
                     <rect
                         data-testid="studentHighestProgressBar"
-                        x={width / 100 * highestProgres} y="-2" width="4" height={HEIGHT + 4}
-                        fill="#131F45" rx={4}
+                        x={width / 100 * highestProgres} y="0" width="5" height={HEIGHT + 4}
+                        fill="#131F45" rx={4} stroke="rgb(255,255,255)" strokeWidth="1" transform="translate(-2.5, -2)"
                     />}
-                    {pointsRange.map(pointRange =>
-                        (
-                            <g key={pointRange.points} transform="scale(1)">
-                                <line x1={width / 100 * pointRange.range} y1="0" x2={width / 100 * pointRange.range} y2={HEIGHT} stroke="gray" />
-                                <line x1={width / 100 * pointRange.range} y1={HEIGHT} x2={width / 100 * pointRange.range} y2={HEIGHT + 5} stroke="black" />
-                            </g>
-                        )
+                    {pointsRange.map(pointRange => (
+                        <g key={pointRange.points} transform="scale(1)">
+                            {pointRange.range < 100 &&
+                            <line data-testid={`studentProgressDivider${pointRange.range}`} x1={width / 100 * pointRange.range} y1="0" x2={width / 100 * pointRange.range} y2={HEIGHT} stroke="gray" />}
+                            <line data-testid={`studentPointsDivider${pointRange.points}`} x1={width / 100 * pointRange.range} y1={HEIGHT} x2={width / 100 * pointRange.range} y2={HEIGHT + 5} stroke="black" />
+                        </g>
+                    )
                     )}
                 </svg>
             </Box>
             <Box display="flex" flexDirection="row" alignItems="flex-start">
                 <Typography variant="caption" data-testid="studentPointsLabel">Points</Typography>
-                {pointsRange.map(pointRange =>
-                    (
-                        <Box key={`pointLabel${pointRange.points}`} style={{ position: 'relative', left: `${width / 100 * pointRange.range}px` }}>
-                            <Typography variant="caption">{pointRange.points}</Typography>
+                {pointsRange.map((pointRange, index) => {
+                    labelShift += index === 0 ? LABEL_CONTAINER_WIDTH / 2 : LABEL_CONTAINER_WIDTH
+
+                    return (
+                        <Box key={`pointLabel${pointRange.points}`} style={{ position: 'relative', left: `${pointRange.range}%` }}>
+                            <Box width={`${LABEL_CONTAINER_WIDTH}px`} display="flex" flexDirection="row" justifyContent="center" style={{ position: 'relative', right: `${labelShift}px` }}>
+                                <Typography variant="caption">{pointRange.points}</Typography>
+                            </Box>
                         </Box>
                     )
+                }
+
                 )}
             </Box>
             <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" flexWrap="wrap">
@@ -116,7 +86,10 @@ const StudentProgress = ({ width = WIDTH, pointsRange, currentProgress, highestP
                         <Box display="flex" flexDirection="row">
                             <Box className={classes.studentCurrentProgressIndicator} data-testid="studentCurrentProgressIndicator" />
                             <Box px={1}>
-                                <Typography variant="body1" data-testid="studentCurrentProgressLabel">Current Progress: {currentProgress && currentProgress > 0 ? `${currentProgress}%` : '-'}</Typography>
+                                <Typography variant="body1" data-testid="studentCurrentProgressLabel">
+                                    Current Progress: {currentProgress && currentProgress > 0
+                                        ? <strong>{currentProgress}%</strong> : '-'}
+                                </Typography>
                             </Box>
                         </Box>
                     </Box>
@@ -124,7 +97,10 @@ const StudentProgress = ({ width = WIDTH, pointsRange, currentProgress, highestP
                         <Box display="flex" flexDirection="row">
                             <Box className={classes.studentHighestProgressIndicator} data-testid="studentHighestProgressIndicator" />
                             <Box px={2}>
-                                <Typography variant="body1" data-testid="studentHighestProgressLabel">Highest Progress: {highestProgres && highestProgres > 0 ? `${highestProgres}%` : '-'}</Typography>
+                                <Typography variant="body1" data-testid="studentHighestProgressLabel">
+                                    Highest Progress: {highestProgres && highestProgres > 0
+                                        ? <strong>{highestProgres}%</strong> : '-'}
+                                </Typography>
                             </Box>
                         </Box>
                     </Box>

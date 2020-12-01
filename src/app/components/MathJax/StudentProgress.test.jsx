@@ -31,6 +31,16 @@ describe('StudentProgress component', () => {
             expect(studentProgress.find('div[data-testid="studentProgressBar"]').exists()).toBeTruthy()
         })
 
+        it('should have correct count of studentProgressDivider ', () => {
+            expect(studentProgress.find('line[data-testid="studentProgressDivider50"]').exists()).toBeTruthy()
+            expect(studentProgress.find('line[data-testid="studentProgressDivider100"]').exists()).toBeFalsy()
+        })
+
+        it('should have correct count of studentPointsDivider ', () => {
+            expect(studentProgress.find('line[data-testid="studentPointsDivider5"]').exists()).toBeTruthy()
+            expect(studentProgress.find('line[data-testid="studentPointsDivider10"]').exists()).toBeTruthy()
+        })
+
         it('should have current points label', () => {
             expect(studentProgress.find('span[data-testid="studentPointsLabel"]').text()).toEqual('Points')
         })
