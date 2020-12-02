@@ -32,13 +32,13 @@ describe('StudentProgress component', () => {
         })
 
         it('should have correct count of studentProgressDivider ', () => {
-            expect(studentProgress.find('line[data-testid="studentProgressDivider50"]').exists()).toBeTruthy()
-            expect(studentProgress.find('line[data-testid="studentProgressDivider100"]').exists()).toBeFalsy()
+            expect(studentProgress.find('div[data-testid="studentProgressDivider50"]').exists()).toBeTruthy()
+            expect(studentProgress.find('div[data-testid="studentProgressDivider100"]').exists()).toBeFalsy()
         })
 
         it('should have correct count of studentPointsDivider ', () => {
-            expect(studentProgress.find('line[data-testid="studentPointsDivider5"]').exists()).toBeTruthy()
-            expect(studentProgress.find('line[data-testid="studentPointsDivider10"]').exists()).toBeTruthy()
+            expect(studentProgress.find('div[data-testid="studentPointsDivider5"]').exists()).toBeTruthy()
+            expect(studentProgress.find('div[data-testid="studentPointsDivider10"]').exists()).toBeTruthy()
         })
 
         it('should have current points label', () => {
@@ -76,11 +76,11 @@ describe('StudentProgress component', () => {
         })
 
         it('should have current progress bar', () => {
-            expect(studentProgress.find('rect[data-testid="studentCurrentProgressBar"]').exists()).toBeTruthy()
+            expect(studentProgress.find('div[data-testid="studentCurrentProgressBar"]').exists()).toBeTruthy()
         })
 
         it('should have highest progress bar', () => {
-            expect(studentProgress.find('rect[data-testid="studentHighestProgressBar"]').exists()).toBeTruthy()
+            expect(studentProgress.find('div[data-testid="studentHighestProgressBar"]').exists()).toBeTruthy()
         })
 
         it('should have correct current progress label', () => {

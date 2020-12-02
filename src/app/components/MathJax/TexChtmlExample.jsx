@@ -22,9 +22,14 @@ class TexChtmlExample extends PureComponent {
                 <Box>
                     <StudentProgress
                         pointsRange={[{ points: 4, range: 50 }, { points: 17, range: 60 }, { points: 22, range: 100 }]}
-                        currentProgress={50}
-                        highestProgres={60}
+                        currentProgress={40}
+                        highestProgres={65}
                     />
+                </Box>
+                <Box>
+                    <Typography data-testid="mathMlContentHeader" variant="h6" component="h6" gutterBottom>
+                        MathMl content view2
+                    </Typography>
                 </Box>
             </Box>
         )
