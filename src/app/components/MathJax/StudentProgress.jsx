@@ -60,7 +60,7 @@ const StudentProgress = ({
 
     return (
         <Box>
-            <Typography variant="caption" data-testid="studentProgressLabel">Progress</Typography>
+            <Typography variant="caption" color="textSecondary" data-testid="studentProgressLabel">Progress</Typography>
 
             <Box data-testid="studentProgressBar" className={classes.studentProgressBar}>
                 {
@@ -100,14 +100,14 @@ const StudentProgress = ({
             </Box>
 
             <Box display="flex" flexDirection="row">
-                <Typography variant="caption" data-testid="studentPointsLabel">Points</Typography>
+                <Typography variant="caption" color="textSecondary" data-testid="studentPointsLabel">Points</Typography>
                 {pointsRange.map((pointRange, index) => {
                     labelShift += index === 0 ? LABEL_CONTAINER_WIDTH / 2 : LABEL_CONTAINER_WIDTH
 
                     return (
                         <Box key={`pointLabel${pointRange.points}`} style={{ position: 'relative', left: `${pointRange.range}%` }}>
                             <Box width={`${LABEL_CONTAINER_WIDTH}px`} display="flex" flexDirection="row" justifyContent="center" style={{ position: 'relative', right: `${labelShift}px` }}>
-                                <Typography variant="caption">{pointRange.points}</Typography>
+                                <Typography variant="caption" color="textSecondary">{pointRange.points}</Typography>
                             </Box>
                         </Box>
                     )
