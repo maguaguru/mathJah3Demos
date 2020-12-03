@@ -33,8 +33,9 @@ describe('AppNavBar component', () => {
     it('should have all Tab components', () => {
         const navTabItems = appNavBar.find(Tabs).find(Tab)
 
-        expect(navTabItems).toHaveLength(2)
-        expect(navTabItems.at(0).text()).toBe('tex-chtml')
-        expect(navTabItems.at(1).text()).toBe('tex-svg')
+        expect(navTabItems).toHaveLength(3)
+        expect(navTabItems.at(0).text()).toBe('resources-test')
+        expect(navTabItems.at(1).text()).toBe('tex-chtml')
+        expect(navTabItems.at(2).text()).toBe('tex-svg')
     })
 })

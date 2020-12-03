@@ -1,7 +1,12 @@
 import React, { PureComponent } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import { Box, Container } from '@material-ui/core'
-import { AppNavBarContainer, AppRouteContainer, MathJahTexChtmlContainer } from './containers'
+import {
+    AppNavBarContainer,
+    AppRouteContainer,
+    MathJahTexChtmlContainer,
+    ResourcesContainer
+} from './containers'
 
 class Test extends PureComponent {
     render () {
@@ -24,6 +29,7 @@ class App extends PureComponent {
                         <Box p={4}>
                             <Switch>
                                 <AppRouteContainer path="/main/tex-chtml" component={MathJahTexChtmlContainer} />
+                                <AppRouteContainer path="/main/resources-test" component={ResourcesContainer} />
                                 <AppRouteContainer path="/main" component={Test} />
                                 <Route>
                                     <Redirect to="/main" />

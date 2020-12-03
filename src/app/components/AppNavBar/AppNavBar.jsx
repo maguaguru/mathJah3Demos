@@ -34,7 +34,7 @@ class AppNavBar extends PureComponent {
 }
 
 AppNavBar.propTypes = {
-    tab: PropTypes.oneOf([NavigationTabs.TEX_CHTML, NavigationTabs.TEXT_SVG]).isRequired,
+    tab: PropTypes.oneOf([NavigationTabs.RESOURCES_TEST, NavigationTabs.TEX_CHTML, NavigationTabs.TEXT_SVG]).isRequired,
 
     changeTab: PropTypes.func.isRequired
 }
