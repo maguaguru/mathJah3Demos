@@ -2,6 +2,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import StudentProgress from './StudentProgress'
+import { Tooltip } from '@material-ui/core'
 
 describe('StudentProgress component', () => {
 
@@ -23,6 +24,10 @@ describe('StudentProgress component', () => {
             studentProgress = mount(<StudentProgress {...studentProgressProps} />)
         })
 
+        it('should have correct title', () => {
+            expect(studentProgress.find('p[data-testid="studentProgressTitle"]').text()).toEqual('You’ll see your progress once you start the assignment')
+        })
+
         it('should have student progress label', () => {
             expect(studentProgress.find('span[data-testid="studentProgressLabel"]').text()).toEqual('Progress')
         })
@@ -39,6 +44,12 @@ describe('StudentProgress component', () => {
         it('should have correct count of studentPointsDivider ', () => {
             expect(studentProgress.find('div[data-testid="studentPointsDivider5"]').exists()).toBeTruthy()
             expect(studentProgress.find('div[data-testid="studentPointsDivider10"]').exists()).toBeTruthy()
+        })
+
+        it('should have corerect tooltip for progressDivider', () => {
+            const tooltip = studentProgress.find(Tooltip)
+
+            expect(tooltip.prop('title')).toEqual('50% progress required')
         })
 
         it('should have current points label', () => {

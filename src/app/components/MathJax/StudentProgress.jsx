@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Typography, makeStyles } from '@material-ui/core'
+import { Box, Typography, Tooltip, makeStyles } from '@material-ui/core'
 
 const PROGRESS_BAR_HEIGHT = 24
 const LABEL_CONTAINER_WIDTH = 40
@@ -60,6 +60,7 @@ const StudentProgress = ({
 
     return (
         <Box>
+            <Typography variant="body2" data-testid="studentProgressTitle">You’ll see your progress once you start the assignment</Typography>
             <Typography variant="caption" color="textSecondary" data-testid="studentProgressLabel">Progress</Typography>
 
             <Box data-testid="studentProgressBar" className={classes.studentProgressBar}>
@@ -72,19 +73,21 @@ const StudentProgress = ({
                     {pointsRange.map((pointRange, index) => (
                         <Fragment key={index}>
                             {pointRange.range < 100 &&
+                            <Tooltip key={`progressToolTip${pointRange.points}`} title={`${pointRange.range}% progress required`} placement="bottom-start">
                                 <Box
                                     key={`progressDivider${pointRange.points}`}
                                     data-testid={`studentProgressDivider${pointRange.range}`}
                                     className={classes.progressDivider}
                                     style={{ position: 'relative', left: `${pointRange.range}%`, transform: `translate(-${index + 2}px, 0)` }}
-                                />}
+                                />
+                            </Tooltip>}
                         </Fragment>
                     )
                     )}
                 </Box>
 
                 {highestProgres && highestProgres > 0 &&
-                <Box data-testid="studentHighestProgressBar" className={classes.studentHighestProgressIndicator} style={{ position: 'relative', left: `${highestProgres}%`, top: `-${PROGRESS_BAR_HEIGHT * 2}px`, transform: 'translate(-3px, -3px)' }} />}
+                    <Box data-testid="studentHighestProgressBar" className={classes.studentHighestProgressIndicator} style={{ position: 'relative', left: `${highestProgres}%`, top: `-${PROGRESS_BAR_HEIGHT * 2}px`, transform: 'translate(-3px, -3px)' }} />}
             </Box>
 
             <Box display="flex" flexDirection="row">
