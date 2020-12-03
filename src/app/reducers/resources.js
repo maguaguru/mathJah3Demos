@@ -1,29 +1,32 @@
 import Immutable from 'seamless-immutable'
 import { createActions, handleActions } from 'redux-actions'
 
-const VIDEO_URL = 'https://education-qa.wiley.com/content/Black_Business_Statistics_9e/media/simulations/video/lecture_videos/Black_7e_Video_Ch09.4.html'
-const E_BOOK_URL = 'https://online.vitalsource.com/#/user/sso'
-const DOCUMENT_LINK = 'https://education-qa.wiley.com/wpng/api/v1/content/resource/68003cf4-5502-4418-818b-4f75cc20f207'
-const WORKSHEET_URL = 'https://education-qa.wiley.com/content/Black_Business_Statistics_9e/media/simulations/addres/Excel_Manual/Black_9e_Excel_Manual_Ch02.pdf'
-
 export const {
-    getResourceById
+    getResourceById,
+    changeResourceType,
+    setResourceUrl
 } = createActions(
     {},
-    'GET_RESOURCE_BY_ID'
+    'GET_RESOURCE_BY_ID',
+    'CHANGE_RESOURCE_TYPE',
+    'SET_RESOURCE_URL'
 )
 
 export const defaultState = Immutable.from({
     resourceRequestStatus: 'initial',
     resourceType: '',
-    resourceId: '',
+    resourceId: 'testResID',
     resourceUrl: ''
 })
 
 const reducer = launchId => handleActions(
     {
         [getResourceById]: state =>
-            state.merge({ resourceRequestStatus: 'progress' })
+            state.merge({ resourceRequestStatus: 'progress' }),
+        [changeResourceType]: (state, { payload: resourceType }) =>
+            state.merge({ resourceType: resourceType }),
+        [setResourceUrl]: (state, { payload: resourceUrl }) =>
+            state.merge({ resourceUrl: resourceUrl, resourceRequestStatus: 'ok' })
     },
     defaultState.merge({ launchId })
 )

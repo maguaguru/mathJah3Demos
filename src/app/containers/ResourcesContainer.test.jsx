@@ -5,8 +5,8 @@ import { mount } from 'enzyme'
 import { ResourcesContainer } from '.'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
-import { MemoryRouter, Route } from 'react-router'
-import { resourcesActions } from '../reducers'
+import { MemoryRouter } from 'react-router'
+import { ResourcesActions } from '../reducers'
 import { Resources } from '../components'
 
 describe('Resources Container', () => {
@@ -46,7 +46,14 @@ describe('Resources Container', () => {
             resourcesContainer.find(Resources).prop('getResourceById')('resourceTestId')
 
             expect(mockStore.dispatch).toHaveBeenCalled()
-            expect(mockStore.dispatch).toHaveBeenCalledWith(resourcesActions.getResourceById('resourceTestId'))
+            expect(mockStore.dispatch).toHaveBeenCalledWith(ResourcesActions.getResourceById('resourceTestId'))
+        })
+
+        it('should dispatch changeResourceType action on Resource changeResourceType call ', () => {
+            resourcesContainer.find(Resources).prop('changeResourceType')('type01')
+
+            expect(mockStore.dispatch).toHaveBeenCalled()
+            expect(mockStore.dispatch).toHaveBeenCalledWith(ResourcesActions.changeResourceType('type01'))
         })
     })
 })

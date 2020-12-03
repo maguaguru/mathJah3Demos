@@ -69,6 +69,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^4.2.3",
+    "iframe-resizer-react": "^1.0.4",
     "is-port-busy": "^1.0.5",
     "jest": "^24.9.0",
     "jest-cli": "^24.9.0",

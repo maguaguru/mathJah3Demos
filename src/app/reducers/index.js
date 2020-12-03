@@ -5,7 +5,7 @@ import configuration, * as ActionsFromConfiguration from './configuration'
 import resources, * as ActionsFromResources from './resources'
 
 export const ConfigurationActions = ActionsFromConfiguration
-export const resourcesActions = ActionsFromResources
+export const ResourcesActions = ActionsFromResources
 
 const urlParams = new URLSearchParams(window.location.search)
 const launchId = urlParams.has('launchId') ? urlParams.get('launchId') : undefined

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Resources from '../components/Resources/Resources'
-import { getResourceById } from '../reducers/resources'
+import { getResourceById, changeResourceType } from '../reducers/resources'
 
 const mapStateToProps = (
     {
@@ -20,6 +20,7 @@ const mapStateToProps = (
 }
 
 const mapDispatchToProps = dispatch => ({
+    changeResourceType: resourceType => dispatch(changeResourceType(resourceType)),
     getResourceById: resourceId => dispatch(getResourceById(resourceId))
 })
 

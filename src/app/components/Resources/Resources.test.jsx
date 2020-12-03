@@ -1,6 +1,9 @@
 /* global expect, describe, it, beforeEach */
 import React from 'react'
 import { mount } from 'enzyme'
+import {
+    Select
+} from '@material-ui/core'
 import Resources from './Resources'
 
 describe('Resources component', () => {
@@ -17,8 +20,10 @@ describe('Resources component', () => {
             resourcesProps = {
                 resourceId: 'testResId',
                 resourceUrl: '',
+                resourceType: '',
                 resourceRequestStatus: 'initial',
-                getResourceById: jest.fn()
+                getResourceById: jest.fn(),
+                changeResourceType: jest.fn()
             }
 
             resources = mount(<Resources {...resourcesProps} />)
@@ -31,15 +36,25 @@ describe('Resources component', () => {
         it('should have message "Resourse unavailable"', () => {
             expect(resources.find('p[data-testid="resourceUnavailable"]').text()).toEqual('Resourse unavailable')
         })
+
+        it('should call changeResourceType action after ResourceTypes dropdown is changed ', () => {
+
+            resources.find(Select).at(0).props().onChange({ target: { value: 'Video' } })
+
+            expect(resourcesProps.changeResourceType).toHaveBeenCalled()
+            expect(resourcesProps.changeResourceType).toHaveBeenCalledWith('Video')
+        })
     })
 
     describe('Rendering with not empthy resource url', () => {
         beforeEach(() => {
             resourcesProps = {
                 resourceId: 'testResId',
+                resourceType: '',
                 resourceRequestStatus: 'ok',
                 resourceUrl: 'http://localhost:80808/resources',
-                getResourceById: jest.fn()
+                getResourceById: jest.fn(),
+                changeResourceType: jest.fn()
             }
 
             resources = mount(<Resources {...resourcesProps} />)
