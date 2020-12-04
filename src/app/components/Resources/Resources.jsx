@@ -71,13 +71,7 @@ class Resources extends PureComponent {
                 >
 
                     {resourceUrl && resourceUrl.length && resourceType !== ResourceTypes.RESOURCE_TYPE_DOCUMENT &&
-                    <IframeResizer
-                        log
-                        data-testid="resourcesFrame"
-                        src={resourceUrl}
-                        style={{ width: '1px', minWidth: '100%' }}
-                    />
-                    /*<iframe data-testid="resourcesFrame" src={resourceUrl} width="100%" height="100%" />*/}
+                    <iframe data-testid="resourcesFrame" src={resourceUrl} width="100%" height="100px" />}
 
                     {resourceUrl && resourceUrl.length && resourceType === ResourceTypes.RESOURCE_TYPE_DOCUMENT &&
                     <Link href={resourceUrl}>

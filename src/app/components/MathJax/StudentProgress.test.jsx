@@ -102,4 +102,23 @@ describe('StudentProgress component', () => {
             expect(studentProgress.find('p[data-testid="studentHighestProgressLabel"]').text()).toEqual('Highest Progress: 60%')
         })
     })
+
+    describe('Render in mobile view', () => {
+        beforeEach(() => {
+            studentProgressProps = {
+                pointsRange: [
+                    { points: 5, range: 50 },
+                    { points: 10, range: 100 }
+                ],
+                currentProgress: 45,
+                highestProgres: 60,
+                isMobile: true
+            }
+            studentProgress = mount(<StudentProgress {...studentProgressProps} />)
+        })
+
+        it('should not have current points label', () => {
+            expect(studentProgress.find('span[data-testid="studentPointsLabel"]').exists()).toBeFalsy()
+        })
+    })
 })

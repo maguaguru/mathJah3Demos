@@ -1,6 +1,14 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Typography, Tooltip, makeStyles } from '@material-ui/core'
+import {
+    Box,
+    Hidden,
+    Typography,
+    Tooltip,
+    makeStyles,
+    isWidthDown,
+    withWidth
+} from '@material-ui/core'
 
 const PROGRESS_BAR_HEIGHT = 24
 const LABEL_CONTAINER_WIDTH = 40
@@ -51,12 +59,13 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const StudentProgress = ({
+    isMobile,
     pointsRange,
     currentProgress,
     highestProgres
 }) => {
     const classes = useStyles({ currentProgress })
-    let labelShift = POINTS_LABEL_WIDTH
+    let labelShift = isMobile ? 0 : POINTS_LABEL_WIDTH
 
     return (
         <Box>
@@ -103,7 +112,8 @@ const StudentProgress = ({
             </Box>
 
             <Box display="flex" flexDirection="row">
-                <Typography variant="caption" color="textSecondary" data-testid="studentPointsLabel">Points</Typography>
+                {!isMobile &&
+                <Typography variant="caption" color="textSecondary" data-testid="studentPointsLabel">Points</Typography>}
                 {pointsRange.map((pointRange, index) => {
                     labelShift += index === 0 ? LABEL_CONTAINER_WIDTH / 2 : LABEL_CONTAINER_WIDTH
 
@@ -156,6 +166,7 @@ StudentProgress.propTypes = {
         points: PropTypes.number,
         range: PropTypes.number
     })).isRequired,
+    isMobile: PropTypes.bool,
     currentProgress: PropTypes.number,
     highestProgres: PropTypes.number
 }
