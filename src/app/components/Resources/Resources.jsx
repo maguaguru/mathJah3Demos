@@ -10,7 +10,6 @@ import {
     Select
 } from '@material-ui/core'
 import { ResourceTypes } from '../../entities'
-import IframeResizer from 'iframe-resizer-react'
 
 class Resources extends PureComponent {
     constructor (props) {

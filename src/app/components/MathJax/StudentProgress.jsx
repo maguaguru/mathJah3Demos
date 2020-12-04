@@ -2,17 +2,16 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import {
     Box,
-    Hidden,
     Typography,
     Tooltip,
-    makeStyles,
-    isWidthDown,
-    withWidth
+    makeStyles
 } from '@material-ui/core'
 
 const PROGRESS_BAR_HEIGHT = 24
-const LABEL_CONTAINER_WIDTH = 40
-const POINTS_LABEL_WIDTH = 31
+const LABEL_CONTAINER_WIDTH = 20
+const POINTS_LABEL_WIDTH_FIRFOX = 31
+const POINTS_LABEL_WIDTH_GHROME = 35
+const POINTS_LABEL_WIDTH = navigator.userAgent.indexOf('Firefox') !== -1 ? POINTS_LABEL_WIDTH_FIRFOX : POINTS_LABEL_WIDTH_GHROME
 
 const useStyles = makeStyles(theme => ({
     studentProgressBar: {
@@ -29,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     pointsDivider: {
         width: '1px',
         height: '4px',
-        borderLeft: 'solid 1px #727272'
+        borderLeft: 'solid 1px #727272' // theme.palette[grey400]
     },
     studentCurrentProgressIndicator: {
         width: `${PROGRESS_BAR_HEIGHT}px`,
@@ -58,6 +57,16 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
+const getLabelShift = (isMobile, range) => {
+    if (isMobile) {
+        return 0
+    } else if (range === 0) {
+        return POINTS_LABEL_WIDTH + 9
+    } else {
+        return POINTS_LABEL_WIDTH
+    }
+}
+
 const StudentProgress = ({
     isMobile,
     pointsRange,
@@ -65,7 +74,9 @@ const StudentProgress = ({
     highestProgres
 }) => {
     const classes = useStyles({ currentProgress })
-    let labelShift = isMobile ? 0 : POINTS_LABEL_WIDTH
+    let labelShift = getLabelShift(isMobile, pointsRange[0].range)
+    const nonZeroPoinsRange = pointsRange.filter(pointRange => pointRange.range > 0)
+    console.log('nonZeroPoinsRange: ', nonZeroPoinsRange)
 
     return (
         <Box>
@@ -113,16 +124,19 @@ const StudentProgress = ({
 
             <Box display="flex" flexDirection="row">
                 {!isMobile &&
-                <Typography variant="caption" color="textSecondary" data-testid="studentPointsLabel">Points</Typography>}
-                {pointsRange.map((pointRange, index) => {
+                <Typography variant="caption" color="textSecondary" data-testid="studentPointsLabel">{pointsRange[0].range === 0 ? `${pointsRange[0].points} Points` : 'Points'}</Typography>}
+                {nonZeroPoinsRange.map((pointRange, index) => {
                     labelShift += index === 0 ? LABEL_CONTAINER_WIDTH / 2 : LABEL_CONTAINER_WIDTH
 
                     return (
-                        <Box key={`pointLabel${pointRange.points}`} style={{ position: 'relative', left: `${pointRange.range}%` }}>
-                            <Box width={`${LABEL_CONTAINER_WIDTH}px`} display="flex" flexDirection="row" justifyContent="center" style={{ position: 'relative', right: `${labelShift}px` }}>
-                                <Typography variant="caption" color="textSecondary">{pointRange.points}</Typography>
-                            </Box>
-                        </Box>
+                        <Fragment key={index}>
+                            {pointRange.range !== 0 &&
+                            <Box key={`pointLabel${pointRange.points}`} style={{ position: 'relative', left: `${pointRange.range}%` }}>
+                                <Box width={`${LABEL_CONTAINER_WIDTH}px`} display="flex" flexDirection="row" justifyContent={pointRange.range === 100 ? 'flex-start' : 'center'} style={{ position: 'relative', right: `${labelShift}px` }}>
+                                    <Typography variant="caption" color="textSecondary">{pointRange.points}</Typography>
+                                </Box>
+                            </Box>}
+                        </Fragment>
                     )
                 }
                 )}

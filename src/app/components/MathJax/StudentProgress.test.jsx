@@ -103,6 +103,24 @@ describe('StudentProgress component', () => {
         })
     })
 
+    describe('Render with poits range 0%', () => {
+        beforeEach(() => {
+            studentProgressProps = {
+                pointsRange: [
+                    { points: 5, range: 0 },
+                    { points: 10, range: 100 }
+                ],
+                currentProgress: 45,
+                highestProgres: 60
+            }
+            studentProgress = mount(<StudentProgress {...studentProgressProps} />)
+        })
+
+        it('should have current points label', () => {
+            expect(studentProgress.find('span[data-testid="studentPointsLabel"]').text()).toEqual('5 Points')
+        })
+    })
+
     describe('Render in mobile view', () => {
         beforeEach(() => {
             studentProgressProps = {
