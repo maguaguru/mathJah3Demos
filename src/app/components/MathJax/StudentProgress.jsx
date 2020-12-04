@@ -76,7 +76,6 @@ const StudentProgress = ({
     const classes = useStyles({ currentProgress })
     let labelShift = getLabelShift(isMobile, pointsRange[0].range)
     const nonZeroPoinsRange = pointsRange.filter(pointRange => pointRange.range > 0)
-    console.log('nonZeroPoinsRange: ', nonZeroPoinsRange)
 
     return (
         <Box>
