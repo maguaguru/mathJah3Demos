@@ -1,8 +1,79 @@
 import React, { PureComponent } from 'react'
 import { Box, Button, TextareaAutosize, Typography } from '@material-ui/core'
 import StudentProgress from './StudentProgress'
+import { mathJaxUtils } from './../../entities'
+
+const mathMlExpression = '<math:math xmlns:math="http://www.w3.org/1998/Math/MathML" uni:algorithm="1" display="block">\n' +
+    '        <mrow>\n' +
+    '          <msub>\n' +
+    '            <mrow>\n' +
+    '              <mover>\n' +
+    '                <mrow>\n' +
+    '                  <mi>F</mi>\n' +
+    '                </mrow>\n' +
+    '                <mrow>\n' +
+    '                  <mo>&#8594;</mo>\n' +
+    '                </mrow>\n' +
+    '              </mover>\n' +
+    '            </mrow>\n' +
+    '            <mrow>\n' +
+    '              <mn>1</mn>\n' +
+    '            </mrow>\n' +
+    '          </msub>\n' +
+    '          <mo>=</mo>\n' +
+    '          <mo>(</mo>\n' +
+    '          <mo>\n' +
+    '            1.2\n' +
+    '          </mo>\n' +
+    '          <mtext>&#8201;</mtext>\n' +
+    '          <mo>N</mo>\n' +
+    '          <mo>)</mo>\n' +
+    '          <mtext>&#8201;</mtext>\n' +
+    '          <mover>\n' +
+    '            <mrow>\n' +
+    '              <mi>i</mi>\n' +
+    '            </mrow>\n' +
+    '            <mrow>\n' +
+    '              <mo>&#770;</mo>\n' +
+    '            </mrow>\n' +
+    '          </mover>\n' +
+    '          <mo>+</mo>\n' +
+    '          <mo>(</mo>\n' +
+    '          <mo>\n' +
+    '            7.4\n' +
+    '          </mo>\n' +
+    '          <mtext>&#8201;</mtext>\n' +
+    '          <mo>N</mo>\n' +
+    '          <mo>)</mo>\n' +
+    '          <mtext>&#8201;</mtext>\n' +
+    '          <mover>\n' +
+    '            <mrow>\n' +
+    '              <mi>j</mi>\n' +
+    '            </mrow>\n' +
+    '            <mrow>\n' +
+    '              <mo>&#770;</mo>\n' +
+    '            </mrow>\n' +
+    '          </mover>\n' +
+    '        </mrow>\n' +
+    '      </math:math>'
+
+
+let mathSvg
 
 class TexChtmlExample extends PureComponent {
+
+    constructor(props) {
+        super(props);
+        this.myRef = React.createRef();  }
+
+    componentDidMount() {
+        console.log('componentDidMount window.MathJax: ', window.MathJax )
+        console.log('componentDidMount mathJah.mathml2svg: ', window.MathJax.mathml2svg)
+
+        mathSvg =  mathJaxUtils.mmlToSvg(mathMlExpression, this.myRef.current)
+
+        console.log('mathSvg: ', mathSvg)
+    }
 
     render () {
         return (
@@ -31,6 +102,7 @@ class TexChtmlExample extends PureComponent {
                         MathMl content view2
                     </Typography>
                 </Box>
+                <div ref={this.myRef}/>
             </Box>
         )
     }
